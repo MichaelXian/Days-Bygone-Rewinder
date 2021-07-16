@@ -58,6 +58,12 @@ epic_weapons = [harlott, rhongomiant, sharanga, ascalon]
 legendary_color = "legendary_color.png"
 legendary_weapons = [excalibur, aldan, galatine, bazooka, minigun, mjolnir, dragunov]
 
+# Tap
+tap = "tap.png"
+yellow = Pattern("yellow2.png").similar(0.64)
+red = Pattern("red.png").similar(0.57)
+green = Pattern("green.png").similar(0.51)
+
 # Helper Functions
 def wait_click(image):
     try:
@@ -65,6 +71,14 @@ def wait_click(image):
         click(image)
     except:
         anti_anti_cheat()
+        raise Exception("Anti-cheat hit, reset to beginning")
+
+def try_click(image):
+    try:
+        click(image)
+        return True
+    except:
+        return False
 
 def if_click(condition_region, condition, image_region, image):
     if condition_region.exists(condition):
@@ -76,6 +90,7 @@ def check_weapons(weapons):
 # Anti anti-cheat functions
 def anti_anti_cheat():
     anti_select()
+    anti_tap()
 
 def anti_select():
     while select_region.exists(select):
@@ -88,23 +103,35 @@ def anti_select():
         elif select_color.region.exists(legendary_color):
             check_weapons(legendary_weapons)
         else:
-            raise Exception
+            raise Exception("Could not find any weapons")
+
+def anti_tap():
+    while exists(tap):
+        if try_click(yellow):
+            continue
+        if try_click(green):
+            continue
+        if try_click(red):
+            continue
+        click(Location(100, 100)) # If cant find any circles, give up and try again
 
 # Main function
 while True:
-    break
-    wait_click(battle)
-    wait_click(campaign)
-    wait_click(confirm)
-    try:
-        wait(fifty, 120)
+    try: # skip back to battle if we hit an anti-cheat
+        wait_click(battle)
+        wait_click(campaign)
+        wait_click(confirm)
+        try:
+            wait(fifty, 120)
+        except:
+            pass
+        sleep(5)
+        wait_click(pause)
+        wait_click(ret)
+        wait_click(confirm)
+        wait_click(elixir_tab)
+        wait_click(rewind)
+        wait_click(rewind_confirm)
     except:
         pass
-    sleep(5)
-    wait_click(pause)
-    wait_click(ret)
-    wait_click(confirm)
-    wait_click(elixir_tab)
-    wait_click(rewind)
-    wait_click(rewind_confirm)
             
