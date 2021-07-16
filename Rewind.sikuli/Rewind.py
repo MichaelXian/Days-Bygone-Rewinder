@@ -2,6 +2,7 @@ import time
 time.sleep(0)
 screen = Region(0,0,1920,1080)
 select_region = Region(517,178,897,101)
+select_color_region = Region(993,187,266,83)
 select_image_region = Region(129,414,1649,237)
 elixir_tab = "1626372344232.png"
 rewind = Pattern("1626372385701.png").similar(0.90)
@@ -45,9 +46,16 @@ minigun = ("1626392504074.png","1626391572886.png")
 mjolnir = ("1626392619412.png","1626392625429.png")
 dragunov = ("1626395761714.png","1626391670928.png")
 
-weapons = [bow, sword, glock, axe, pickaxe, boomerang, shuriken, cleaver,
-        wushu_spear, kunai, longsword, crimson_bow, grenade, p90, harlott,
-        rhongomiant, sharanga, ascalon, excalibur, aldan, minigun]
+common_color = "1626397534033.png"
+common_weapons = [bow, sword, glock, axe, pickaxe, boomerang, shuriken, cleaver]
+
+rare_color = "rare_color.png"
+rare_weapons = [wushu_spear, kunai, longsword, crimson_bow, grenade, p90]
+
+epic_color = "epic_color.png"
+epic_weapons = [harlott, rhongomiant, sharanga, ascalon]
+
+legendary_color = "legendary_color.png"
 legendary_weapons = [excalibur, aldan, galatine, bazooka, minigun, mjolnir, dragunov]
 
 # Helper Functions
@@ -58,32 +66,29 @@ def wait_click(image):
     except:
         anti_anti_cheat()
 
-# REMEMBER TO REPLACE CLICK LOCATION WITH CLICK IMAGE
 def if_click(condition_region, condition, image_region, image):
     if condition_region.exists(condition):
-        click(Location(100,100))
-        #click(image)
+        click(image)
 
+def check_weapons(weapons):
+    for txt, img in weapons:
+        if_click(select_region, txt, select_image_region, img)
 # Anti anti-cheat functions
 def anti_anti_cheat():
     anti_select()
 
 def anti_select():
     while select_region.exists(select):
-        for txt, img in weapons:
-            print(txt)
-            print(img)
-            if_click(select_region, txt, select_image_region, img)
-
-legendary_color = "legendary_color.png"
-
-while True:
-    if Region(992,195,87,61).exists(legendary_color):
-        for txt, img in legendary_weapons:
-            if_click(select_region, txt, select_image_region, img)
-    else:
-       click(Location(100,100))
-# anti_anti_cheat()
+        if select_color_region.exists(common_color):
+            check_weapons(common_weapons)
+        elif select_color_region.exists(rare_color):
+            check_weapons(rare_weapons)
+        elif select_color_region.exists(epic_color):
+            check_weapons(epic_weapons)
+        elif select_color.region.exists(legendary_color):
+            check_weapons(legendary_weapons)
+        else:
+            raise Exception
 
 # Main function
 while True:
