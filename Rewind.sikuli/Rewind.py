@@ -2,7 +2,7 @@ import time
 
 screen = Region(0,0,1920,1080)
 select_region = Region(517,178,897,101)
-select_color_region = Region(993,187,266,83)
+select_color_region = Region(1029,192,366,63)
 select_image_region = Region(129,414,1649,237)
 elixir_tab = "1626372344232.png"
 rewind = Pattern("1626372385701.png").similar(0.90)
@@ -13,6 +13,7 @@ confirm = "1626372757306.png"
 pause = "pause.png"
 ret = "return.png"
 fifty = Pattern("1626373786717.png").exact()
+defeat = "defeat.png"
 
 # Anti anti-cheat
 # Select an item
@@ -22,6 +23,7 @@ rare_color = "rare_color.png"
 epic_color = "epic_color.png"
 legendary_color = "legendary_color.png"
 current_item_type = None
+item_found = False
 
 # Weapons
 
@@ -57,6 +59,37 @@ mjolnir = ("1626392619412.png","1626392625429.png")
 dragunov = ("1626395761714.png","1626391670928.png")
 legendary_weapons = [excalibur, aldan, galatine, bazooka, minigun, mjolnir, dragunov]
 
+# Hats
+propeller_cap = ("propeller_Cap.png","1626510370622.png")
+fez = ("1626510467141.png","1626510516290.png")
+strawberry_cone = ("1626510559594.png","1626510565926.png")
+graduation_cap = ("1626510639473.png","1626510645056.png")
+reading_glasses = ("1626510693258.png","1626510699801.png")
+cheap_headphones = ("1626510714331.png","1626510719858.png")
+surgical_mask = ("1626510759069.png","1626510764487.png")
+top_hat = ("1626510984876.png","1626510989663.png")
+common_helms = [propeller_cap, fez, strawberry_cone, graduation_cap, reading_glasses, cheap_headphones, surgical_mask, top_hat]
+peaked_cap = ("1626510776300.png","1626510780969.png")
+steel_helm = ("1626510403789.png","1626510410274.png")
+brown_fedora = ("1626510445135.png","1626510434445.png")
+cowboy_hat = ("1626510600320.png","1626510606305.png")
+pointy_hat = ("1626510660465.png","1626510665321.png")
+hard_hat = ("1626510821491.png","1626510826292.png")
+crimson_beak = ("1626510875975.png","1626510880657.png")
+transparent_cap = ("1626510893188.png","1626510897670.png")
+straw_hat = ("1626510911562.png","1626510916257.png")
+panama_hat = ("1626510963345.png","1626510968130.png")
+rare_helms = [peaked_cap, steel_helm, brown_fedora, cowboy_hat, pointy_hat, hard_hat, crimson_beak, transparent_cap, straw_hat, panama_hat]
+bucket_helm = ("bucket.png","1626510300033.png")
+great_helm = ("1626510799326.png","1626510804676.png") 
+cozy_hat = ("1626510856586.png","1626510845668.png")
+midas_helm = ("1626510931789.png","1626510937305.png")
+mushroom_cap = ("1626513434980.png","1626513443118.png")
+epic_helms = [bucket_helm, great_helm, cozy_hat, midas_helm, mushroom_cap]
+oni_mask = ("1626510737382.png","1626510742869.png")
+void_mask = ("void_mask.png","1626511369748.png")
+kingsguard_helm = ("1626511504387.png","1626511509382.png")
+legendary_helms = [oni_mask, void_mask, kingsguard_helm]
 # Tap
 tap = "tap.png"
 yellow = Pattern("yellow2.png").similar(0.64)
@@ -69,6 +102,7 @@ def wait_click(image):
         wait(image, 10)
         click(image)
     except:
+        print("Anti anti cheat")
         anti_anti_cheat()
         raise Exception("Anti-cheat hit, reset to beginning")
 
@@ -81,39 +115,70 @@ def try_click(image):
 
 def cond_click(condition_region, condition, image_region, image):
     if condition_region.exists(condition):
-        click(image)
-        return True
+        return try_click(image)
     return False
 
 def check_items(items, name):
-    for txt, img in items:
-        if cond_click(select_region, txt, select_image_region, img):
-            current_item_type = name
-            return True
+    global current_item_type
+    global item_found
+    print("Check items")
+    print(current_item_type)
+    print(name)
+    if current_item_type == name or current_item_type is None:
+        for txt, img in items:
+            if cond_click(select_region, txt, select_image_region, img):
+                print("found")
+                current_item_type = name
+                item_found = True
+                return True
+    print("failed")
     return False
 
-def select_items(common, rare, epic, legendary, name):
-    if current_item_type is name or current_item_type is None:
-        if select_color_region.exists(common_color):
-            check_items(common, name)
-        elif select_color_region.exists(rare_color):
-            check_items(rare, name)
-        elif select_color_region.exists(epic_color):
-            check_items(epic, name)
-        elif select_color.region.exists(legendary_color):
-            check_items(legendary, name)
-        else:
-            click(Location(100, 100))
-            print("Could not find any " + name)
+def full_rewind():
+    while exists(rewind):
+        try_click(rewind)
+        try_click(rewind_confirm)
+
+def check_defeat():
+    if try_click(defeat):
+        wait_click(elixir_tab)
+        full_rewind()
 
 # Anti anti-cheat functions
 def anti_anti_cheat():
-    anti_select()
-    anti_tap()
+    try:
+        print("check defeat")
+        check_defeat()
+        print("Anti select")
+        anti_select()
+        print ("Anti tap")
+        anti_tap()
+    except Exception as e:
+        print(e)
 
 def anti_select():
+    global item_found
+    global current_item_type
     while select_region.exists(select):
-        select_items(common_weapons, rare_weapons, epic_weapons, legendary_weapons, "weapons")
+        print("select")
+        item_found = False
+        if select_color_region.exists(common_color):
+            check_items(common_weapons, "weapons")
+            check_items(common_helms, "helms")
+        elif select_color_region.exists(rare_color):
+            check_items(rare_weapons, "weapons")
+            check_items(rare_helms, "helms")
+        elif select_color_region.exists(epic_color):
+            check_items(epic_weapons, "weapons")
+            check_items(epic_helms, "helms")
+        elif select_color.region.exists(legendary_color):
+            check_items(legendary_weapons, "weapons")
+            check_items(legendary_helms, "helms")
+        if not item_found:
+            # If cant find item, give up and try again
+            click(Location(100, 100))
+            print("Could not find any " + name)
+    print("Select Done")
     current_item_type = None
 
 def anti_tap():
@@ -130,20 +195,20 @@ def anti_tap():
 # Main function
 while True:
     try: # skip back to battle if we hit an anti-cheat
+        print("try")
         wait_click(battle)
         wait_click(campaign)
         wait_click(confirm)
-        try:
+        try: # In case we skip 50-59, timeout at 120s
             wait(fifty, 120)
         except:
             pass
-        sleep(5)
+        sleep(2)
         wait_click(pause)
         wait_click(ret)
         wait_click(confirm)
         wait_click(elixir_tab)
-        wait_click(rewind)
-        wait_click(rewind_confirm)
-    except:
-        pass
+        full_rewind()
+    except Exception as e:
+        print(e)
             
