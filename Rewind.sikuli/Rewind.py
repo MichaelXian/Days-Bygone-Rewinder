@@ -9,11 +9,14 @@ rewind = Pattern("1626372385701.png").similar(0.90)
 rewind_confirm = "rewind_confirm.png"
 battle = "battle.png"
 campaign = "1626372534941.png"
-confirm = "1626372757306.png"
+ok = "1626372757306.png"
 pause = "pause.png"
 ret = "return.png"
 fifty = Pattern("1626373786717.png").exact()
 defeat = "defeat.png"
+claim = "claim.png"
+confirm = "confirm.png"
+close_button = "close_button.png"
 
 # Anti anti-cheat
 # Select an item
@@ -144,9 +147,21 @@ def check_defeat():
         wait_click(elixir_tab)
         full_rewind()
 
+def check_claim():
+    if try_click(claim):
+        click(Location(100, 100))
+        click(Location(100, 100))
+        click(Location(100, 100))
+        try_click(confirm)
+        try_click(close_button)
+        
+
 # Anti anti-cheat functions
 def anti_anti_cheat():
     try:
+        print("check claim")
+        check_claim()
+        try_click(claim)
         print("check defeat")
         check_defeat()
         print("Anti select")
@@ -199,7 +214,7 @@ while True:
         print("try")
         wait_click(battle)
         wait_click(campaign)
-        wait_click(confirm)
+        wait_click(ok)
         try: # In case we skip 50-59, timeout at 120s
             wait(fifty, 120)
         except:
@@ -207,7 +222,7 @@ while True:
         sleep(2)
         wait_click(pause)
         wait_click(ret)
-        wait_click(confirm)
+        wait_click(ok)
         wait_click(elixir_tab)
         full_rewind()
     except Exception as e:
