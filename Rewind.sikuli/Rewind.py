@@ -177,7 +177,8 @@ def anti_select():
         if not item_found:
             # If cant find item, give up and try again
             click(Location(100, 100))
-            print("Could not find any " + name)
+            print("Could not find any:")
+            print(name)
     print("Select Done")
     current_item_type = None
 
