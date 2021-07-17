@@ -1,5 +1,5 @@
 import time
-time.sleep(0)
+
 screen = Region(0,0,1920,1080)
 select_region = Region(517,178,897,101)
 select_color_region = Region(993,187,266,83)
@@ -16,6 +16,9 @@ fifty = Pattern("1626373786717.png").exact()
 
 # Anti anti-cheat
 # Select an item
+current_item_type = None
+
+# Weapons
 select = "select.png"
 
 bow = ("bow_text.png","bow.png")
@@ -80,13 +83,33 @@ def try_click(image):
     except:
         return False
 
-def if_click(condition_region, condition, image_region, image):
+def cond_click(condition_region, condition, image_region, image):
     if condition_region.exists(condition):
         click(image)
+        return True
+    return False
 
-def check_weapons(weapons):
-    for txt, img in weapons:
-        if_click(select_region, txt, select_image_region, img)
+def check_items(items, name):
+    for txt, img in items:
+        if cond_click(select_region, txt, select_image_region, img):
+            current_item_type = name
+            return True
+    return False
+
+def select_items(common, rare, epic, legendary, name):
+    if current_item_type is name or current_item_type is None:
+        if select_color_region.exists(common_color):
+            check_items(common, name)
+        elif select_color_region.exists(rare_color):
+            check_items(rare, name)
+        elif select_color_region.exists(epic_color):
+            check_items(epic, name)
+        elif select_color.region.exists(legendary_color):
+            check_items(legendary, name)
+        else:
+            click(Location(100, 100))
+            print("Could not find any " + name)
+
 # Anti anti-cheat functions
 def anti_anti_cheat():
     anti_select()
@@ -94,19 +117,12 @@ def anti_anti_cheat():
 
 def anti_select():
     while select_region.exists(select):
-        if select_color_region.exists(common_color):
-            check_weapons(common_weapons)
-        elif select_color_region.exists(rare_color):
-            check_weapons(rare_weapons)
-        elif select_color_region.exists(epic_color):
-            check_weapons(epic_weapons)
-        elif select_color.region.exists(legendary_color):
-            check_weapons(legendary_weapons)
-        else:
-            raise Exception("Could not find any weapons")
+        select_items(common_weapons, rare_weapons, epic_weapons, legendary_weapons, "weapons")
+    current_item_type = None
 
 def anti_tap():
     while exists(tap):
+        print("Anti tap")
         if try_click(yellow):
             continue
         if try_click(green):
