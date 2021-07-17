@@ -16,10 +16,14 @@ fifty = Pattern("1626373786717.png").exact()
 
 # Anti anti-cheat
 # Select an item
+select = "select.png"
+common_color = "1626397534033.png"
+rare_color = "rare_color.png"
+epic_color = "epic_color.png"
+legendary_color = "legendary_color.png"
 current_item_type = None
 
 # Weapons
-select = "select.png"
 
 bow = ("bow_text.png","bow.png")
 sword = ("sword_text.png","1626390522571.png")
@@ -29,6 +33,7 @@ pickaxe = ("1626390536141.png","pickaxe.png")
 boomerang = ("1626390670128.png","boomerang.png")
 shuriken = ("1626390708596.png","shuriken.png")
 cleaver = ("1626390693868.png","cleaver.png")
+common_weapons = [bow, sword, glock, axe, pickaxe, boomerang, shuriken, cleaver]
 wushu_spear = ("1626390625845.png","1626390632441.png")
 kunai = ("1626390648430.png","1626390654650.png")
 longsword = ("1626391403021.png","1626391394072.png")
@@ -36,10 +41,12 @@ longsword = ("1626391403021.png","1626391394072.png")
 crimson_bow = ("crimson_bow_text.png","crimson_bow.png")
 grenade = ("1626390951326.png","1626390762386.png")
 p90 = ("1626391615562.png","1626390774018.png")
+rare_weapons = [wushu_spear, kunai, longsword, crimson_bow, grenade, p90]
 harlott = ("1626390798724.png","1626390804726.png")
 rhongomiant = ("1626391706207.png","1626391458728.png")
 sharanga = ("1626391205826.png","1626391196954.png")
 ascalon = ("1626390472430.png", "1626390480217.png")
+epic_weapons = [harlott, rhongomiant, sharanga, ascalon]
 excalibur = ("1626391132891.png","1626391138708.png")
 aldan = ("1626391151645.png","1626391157155.png")
 # sword_ground = (,"1626392275777.png")
@@ -48,17 +55,6 @@ bazooka = ("1626392930918.png","1626391019156.png")
 minigun = ("1626392504074.png","1626391572886.png")
 mjolnir = ("1626392619412.png","1626392625429.png")
 dragunov = ("1626395761714.png","1626391670928.png")
-
-common_color = "1626397534033.png"
-common_weapons = [bow, sword, glock, axe, pickaxe, boomerang, shuriken, cleaver]
-
-rare_color = "rare_color.png"
-rare_weapons = [wushu_spear, kunai, longsword, crimson_bow, grenade, p90]
-
-epic_color = "epic_color.png"
-epic_weapons = [harlott, rhongomiant, sharanga, ascalon]
-
-legendary_color = "legendary_color.png"
 legendary_weapons = [excalibur, aldan, galatine, bazooka, minigun, mjolnir, dragunov]
 
 # Tap
