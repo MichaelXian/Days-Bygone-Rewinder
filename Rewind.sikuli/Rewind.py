@@ -4,6 +4,7 @@ screen = Region(0,0,1920,1080)
 select_region = Region(517,178,897,101)
 select_color_region = Region(1029,192,366,63)
 select_image_region = Region(129,414,1649,237)
+devastation_region = Region(1031,719,795,126)
 elixir_tab = "1626372344232.png"
 rewind = Pattern("1626372385701.png").similar(0.90)
 rewind_confirm = "rewind_confirm.png"
@@ -17,6 +18,9 @@ defeat = "defeat.png"
 claim = "claim.png"
 confirm = "confirm.png"
 close_button = "close_button.png"
+hand = "1626710284525.png"
+buy = "buy.png"
+double = "double.png"
 
 # Anti anti-cheat
 # Select an item
@@ -149,12 +153,21 @@ def check_defeat():
 
 def check_claim():
     if try_click(claim):
-        click(Location(100, 100))
-        click(Location(100, 100))
-        click(Location(100, 100))
-        try_click(confirm)
+        for i in range(10):
+            click(Location(100, 100))
+            sleep(1)
+        while exists(hand):
+            try_click(hand)
+        while exists(confirm):
+            try_click(confirm)
         try_click(close_button)
-        
+
+def buy_devastation():
+    try:
+        wait(buy, 10)
+        devastation_region.click(buy)
+    except:
+        pass
 
 # Anti anti-cheat functions
 def anti_anti_cheat():
@@ -208,23 +221,53 @@ def anti_tap():
             continue
         click(Location(100, 100)) # If cant find any circles, give up and try again
 
-# Main function
-while True:
-    try: # skip back to battle if we hit an anti-cheat
-        print("try")
-        wait_click(battle)
-        wait_click(campaign)
+def elixir_farm():
+    wait_click(battle)
+    wait_click(campaign)
+    try:
+        wait(double, 10)
+        click(double, 10)
+    except:
         wait_click(ok)
-        try: # In case we skip 50-59, timeout at 120s
-            wait(fifty, 120)
-        except:
-            pass
+    try: # In case we skip 50-59, timeout at 120s
+        # wait(fifty, 120)
+        wait(defeat, 1200)
+        click(defeat)
+    except:
+        pass
+    sleep(2)
+    # wait_click(pause)
+    # wait_click(ret)
+    # wait_click(ok)
+    buy_devastation()
+    wait_click(elixir_tab)
+    wait_click(rewind)
+    wait_click(rewind_confirm)
+    # full_rewind()
+
+def rewind_farm():
+    wait_click(battle)
+    wait_click(campaign)
+    wait_click(ok)
+    try: # In case we skip 50-59, timeout at 120s
+        wait(fifty, 120)
+        click(fifty)
+    except:
+        pass
+    if exists(defeat):
+        click(defeat)
+    else:
         sleep(2)
         wait_click(pause)
         wait_click(ret)
         wait_click(ok)
-        wait_click(elixir_tab)
-        full_rewind()
+    wait_click(elixir_tab)
+    full_rewind()
+ 
+# Main function
+while True:
+    try: # skip back to battle if we hit an anti-cheat
+        rewind_farm()
     except Exception as e:
         print(e)
             
