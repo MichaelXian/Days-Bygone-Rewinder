@@ -5,11 +5,19 @@ select_region = Region(517,178,897,101)
 select_color_region = Region(1029,192,366,63)
 select_image_region = Region(129,414,1649,237)
 devastation_region = Region(1031,719,795,126)
+gold_region = Region(235,849,786,134)
+crit_region = Region(1054,602,751,93)
 elixir_tab = "1626372344232.png"
+stats_tab = "stats_tab.png"
+gear_tab = "gear_tab.png"
+fifty_percent = Pattern("fifty_percent.png").similar(0.85)
+hundred_percent = Pattern("hundred_percent.png").similar(0.88)
+ 
 rewind = Pattern("1626372385701.png").similar(0.90)
 rewind_confirm = "rewind_confirm.png"
 battle = "battle.png"
 campaign = "1626372534941.png"
+hunt = "hunt.png"
 ok = "1626372757306.png"
 pause = "pause.png"
 ret = "return.png"
@@ -20,8 +28,24 @@ confirm = "confirm.png"
 close_button = "close_button.png"
 hand = "1626710284525.png"
 buy = "buy.png"
+sell = "sell.png"
+highest_tier_location = Location(1600, 330)
+epic_gear_location = Location(1450, 450)
+sell_confirm_region = Region(1412,574,273,155)
 double = "double.png"
 
+
+# Gear farm
+
+asmodeus = "asmodeus.png"
+asmodeus2 = "asmodeus2.png"
+helm_tab = "helm_tab.png"
+helm_clicks = [asmodeus, asmodeus2, helm_tab]
+
+belphegor = "belphegor.png"
+belphegor2 = "belphegor2.png"
+boot_tab = "boot_tab.png"
+boot_clicks = [belphegor, belphegor2, boot_tab]
 # Anti anti-cheat
 # Select an item
 select = "select.png"
@@ -162,10 +186,11 @@ def check_claim():
             try_click(confirm)
         try_click(close_button)
 
-def buy_devastation():
+def buy_item(buy_region, amount):
     try:
-        wait(buy, 10)
-        devastation_region.click(buy)
+        wait_click(stats_tab)
+        wait_click(amount)
+        buy_region.click(buy)
     except:
         pass
 
@@ -221,7 +246,17 @@ def anti_tap():
             continue
         click(Location(100, 100)) # If cant find any circles, give up and try again
 
+def sell_gear(click_list):
+    wait_click(sell)
+    click(highest_tier_location)
+    click(epic_gear_location)
+    sell_confirm_region.click(sell)
+    # click specific armor tab
+    wait_click(click_list[2])
+
 def elixir_farm():
+    buy_item(gold_region, fifty_percent)
+    buy_item(crit_region, hundred_percent)
     wait_click(battle)
     wait_click(campaign)
     try:
@@ -230,20 +265,15 @@ def elixir_farm():
     except:
         wait_click(ok)
     try: # In case we skip 50-59, timeout at 120s
-        # wait(fifty, 120)
-        wait(defeat, 1200)
+        wait(defeat, 3600)
         click(defeat)
     except:
         pass
     sleep(2)
-    # wait_click(pause)
-    # wait_click(ret)
-    # wait_click(ok)
-    buy_devastation()
+    buy_item(gold_region, hundred_percent)
     wait_click(elixir_tab)
     wait_click(rewind)
     wait_click(rewind_confirm)
-    # full_rewind()
 
 def rewind_farm():
     wait_click(battle)
@@ -263,11 +293,28 @@ def rewind_farm():
         wait_click(ok)
     wait_click(elixir_tab)
     full_rewind()
- 
+
+def gear_farm(click_list):
+    wait_click(battle)
+    wait_click(hunt)
+    # Select enemy
+    wait_click(click_list[0])
+    # Select level
+    wait_click(click_list[1])
+    wait_click(ok)
+    sleep(10)
+    wait(ok, 3600)
+    wait_click(ok)
+    wait_click(gear_tab)
+    # Select which armor piece
+    wait_click(click_list[2])
+    sell_gear(click_list)
+
 # Main function
 while True:
     try: # skip back to battle if we hit an anti-cheat
-        rewind_farm()
+        #gear_farm(boot_clicks)
+        elixir_farm()
     except Exception as e:
         print(e)
             
