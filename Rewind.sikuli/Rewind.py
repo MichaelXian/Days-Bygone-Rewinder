@@ -8,15 +8,16 @@ devastation_region = Region(1031,719,795,126)
 gold_region = Region(235,849,786,134)
 crit_region = Region(1054,602,751,93)
 elixir_tab = "1626372344232.png"
-stats_tab = "stats_tab.png"
+stats_tab = Pattern("stats_tab.png").similar(0.93)
 gear_tab = "gear_tab.png"
-fifty_percent = Pattern("fifty_percent.png").similar(0.85)
-hundred_percent = Pattern("hundred_percent.png").similar(0.88)
+fifty_percent = Pattern("fifty_percent.png").similar(0.82)
+hundred_percent = Pattern("hundred_percent.png").similar(0.82)
  
 rewind = Pattern("1626372385701.png").similar(0.90)
 rewind_confirm = "rewind_confirm.png"
-battle = "battle.png"
-campaign = "1626372534941.png"
+battle = Pattern("battle.png").exact()
+campaign_old = "1626372534941.png"
+campaign = "campaign.png"
 hunt = "hunt.png"
 ok = "1626372757306.png"
 pause = "pause.png"
@@ -33,7 +34,7 @@ highest_tier_location = Location(1600, 330)
 epic_gear_location = Location(1450, 450)
 sell_confirm_region = Region(1412,574,273,155)
 double = "double.png"
-
+elixir_mastery = Pattern("elixir_mastery.png").targetOffset(470,16)
 
 # Gear farm
 
@@ -42,12 +43,24 @@ asmodeus2 = "asmodeus2.png"
 helm_tab = "helm_tab.png"
 helm_clicks = [asmodeus, asmodeus2, helm_tab]
 
+leviathan = "leviathan.png"
+leviathan2 = "leviathan3.png"
+plate_tab = "plate_tab.png"
+plate_clicks = [leviathan, leviathan2, plate_tab]
+
 belphegor = "belphegor.png"
 belphegor2 = "belphegor2.png"
 boot_tab = "boot_tab.png"
+
 boot_clicks = [belphegor, belphegor2, boot_tab]
+
+mammon = "mammon.png"
+mammon2 = "mammon2.png"
+ring_tab = "ring_tab.png"
+ring_clicks = [mammon, mammon2, ring_tab]
 # Anti anti-cheat
 # Select an item
+select_old = "select.png"
 select = "select.png"
 common_color = "1626397534033.png"
 rare_color = "rare_color.png"
@@ -58,68 +71,68 @@ item_found = False
 
 # Weapons
 
-bow = ("bow_text.png","bow.png")
-sword = ("sword_text.png","1626390522571.png")
-glock = ("1626390498465.png","1626390505557.png")
-axe = ("1626391035526.png", "1626390929877.png")
-pickaxe = ("1626390536141.png","pickaxe.png")
-boomerang = ("1626390670128.png","boomerang.png")
-shuriken = ("1626390708596.png","shuriken.png")
-cleaver = ("1626390693868.png","cleaver.png")
+bow = (Pattern("bow_text.png").similar(0.55),"bow.png")
+sword = (Pattern("sword_text.png").similar(0.55),"1626390522571.png")
+glock = (Pattern("1626390498465.png").similar(0.55),"1626390505557.png")
+axe = (Pattern("1626391035526.png").similar(0.56), "1626390929877.png")
+pickaxe = (Pattern("1626390536141.png").similar(0.54),"pickaxe.png")
+boomerang = (Pattern("1626390670128.png").similar(0.56),"boomerang.png")
+shuriken = (Pattern("1626390708596.png").similar(0.56),"shuriken.png")
+cleaver = (Pattern("1626390693868.png").similar(0.56),"cleaver.png")
 common_weapons = [bow, sword, glock, axe, pickaxe, boomerang, shuriken, cleaver]
-wushu_spear = ("1626390625845.png","1626390632441.png")
-kunai = ("1626390648430.png","1626390654650.png")
-longsword = ("1626391403021.png","1626391394072.png")
+wushu_spear = ("1630921792449.png","1626390632441.png")
+kunai = ("1630921826919.png","1626390654650.png")
+longsword = (Pattern("1626391403021.png").similar(0.50),"1626391394072.png")
 
-crimson_bow = ("crimson_bow_text.png","crimson_bow.png")
-grenade = ("1626390951326.png","1626390762386.png")
-p90 = ("1626391615562.png","1626390774018.png")
+crimson_bow = (Pattern("crimson_bow_text.png").similar(0.56),"crimson_bow.png")
+grenade = (Pattern("1626390951326.png").similar(0.56),"1626390762386.png")
+p90 = (Pattern("1626391615562.png").similar(0.56),"1626390774018.png")
 rare_weapons = [wushu_spear, kunai, longsword, crimson_bow, grenade, p90]
-harlott = ("1626390798724.png","1626390804726.png")
-rhongomiant = ("1626391706207.png","1626391458728.png")
-sharanga = ("1626391205826.png","1626391196954.png")
-ascalon = ("1626390472430.png", "1626390480217.png")
+harlott = (Pattern("1626390798724.png").similar(0.56),"1626390804726.png")
+rhongomiant = (Pattern("1626391706207.png").similar(0.54),"1626391458728.png")
+sharanga = (Pattern("1626391205826.png").similar(0.54),"1626391196954.png")
+ascalon = (Pattern("1626390472430.png").similar(0.55), "1626390480217.png")
 epic_weapons = [harlott, rhongomiant, sharanga, ascalon]
-excalibur = ("1626391132891.png","1626391138708.png")
-aldan = ("1626391151645.png","1626391157155.png")
+excalibur = (Pattern("1626391132891.png").similar(0.54),"1626391138708.png")
+aldan = (Pattern("1626391151645.png").similar(0.58),"1626391157155.png")
 # sword_ground = (,"1626392275777.png")
-galatine = ("1626394315914.png","1626391096733.png")
-bazooka = ("1626392930918.png","1626391019156.png")
-minigun = ("1626392504074.png","1626391572886.png")
-mjolnir = ("1626392619412.png","1626392625429.png")
-dragunov = ("1626395761714.png","1626391670928.png")
+galatine = (Pattern("1626394315914.png").similar(0.56),"1626391096733.png")
+bazooka = (Pattern("1626392930918.png").similar(0.56),"1626391019156.png")
+minigun = (Pattern("1626392504074.png").similar(0.56),"1626391572886.png")
+mjolnir = (Pattern("1626392619412.png").similar(0.54),"1626392625429.png")
+dragunov = (Pattern("1626395761714.png").similar(0.56),"1626391670928.png")
 legendary_weapons = [excalibur, aldan, galatine, bazooka, minigun, mjolnir, dragunov]
 
 # Hats
-propeller_cap = ("propeller_Cap.png","1626510370622.png")
-fez = ("1626510467141.png","1626510516290.png")
-strawberry_cone = ("1626510559594.png","1626510565926.png")
-graduation_cap = ("1626510639473.png","1626510645056.png")
-reading_glasses = ("1626510693258.png","1626510699801.png")
-cheap_headphones = ("1626510714331.png","1626510719858.png")
-surgical_mask = ("1626510759069.png","1626510764487.png")
-top_hat = ("1626510984876.png","1626510989663.png")
+propeller_cap = ("1631078434493.png","1626510370622.png")
+fez = ("1631078463860.png","1626510516290.png")
+strawberry_cone = ("1631078613933.png","1626510565926.png")
+graduation_cap = ("1630980859527.png","1626510645056.png")
+reading_glasses = ("1631078602200.png","1626510699801.png")
+cheap_headphones = ("1631078413540.png","1626510719858.png")
+surgical_mask = ("1631078509360.png","1626510764487.png")
+top_hat = ("1631078445878.png","1626510989663.png")
 common_helms = [propeller_cap, fez, strawberry_cone, graduation_cap, reading_glasses, cheap_headphones, surgical_mask, top_hat]
-peaked_cap = ("1626510776300.png","1626510780969.png")
-steel_helm = ("1626510403789.png","1626510410274.png")
-brown_fedora = ("1626510445135.png","1626510434445.png")
-cowboy_hat = ("1626510600320.png","1626510606305.png")
-pointy_hat = ("1626510660465.png","1626510665321.png")
-hard_hat = ("1626510821491.png","1626510826292.png")
-crimson_beak = ("1626510875975.png","1626510880657.png")
-transparent_cap = ("1626510893188.png","1626510897670.png")
-straw_hat = ("1626510911562.png","1626510916257.png")
-panama_hat = ("1626510963345.png","1626510968130.png")
+peaked_cap = (Pattern("1626510776300.png").similar(0.55),"1626510780969.png")
+steel_helm = ("1631078520276.png","1626510410274.png")
+brown_fedora = (Pattern("1626510445135.png").similar(0.51),"1626510434445.png")
+cowboy_hat = ("1631078554907.png","1626510606305.png")
+pointy_hat = (Pattern("1626510660465.png").similar(0.51),"1626510665321.png")
+hard_hat = (Pattern("1626510821491.png").similar(0.55),"1626510826292.png")
+crimson_beak = (Pattern("1626510875975.png").similar(0.55),"1626510880657.png")
+transparent_cap = ("1631078473826.png","1626510897670.png")
+straw_hat = (Pattern("1626510911562.png").similar(0.55),"1626510916257.png")
+panama_hat = ("1631078537363.png","1626510968130.png")
 rare_helms = [peaked_cap, steel_helm, brown_fedora, cowboy_hat, pointy_hat, hard_hat, crimson_beak, transparent_cap, straw_hat, panama_hat]
-bucket_helm = ("bucket.png","1626510300033.png")
-great_helm = ("1626510799326.png","1626510804676.png") 
-cozy_hat = ("1626510856586.png","1626510845668.png")
-midas_helm = ("1626510931789.png","1626510937305.png")
-mushroom_cap = ("1626513434980.png","1626513443118.png")
+bucket_helm = (Pattern("bucket.png").similar(0.56),"1626510300033.png")
+great_helm = ("1631078572945.png","1626510804676.png") 
+cozy_hat = ("1631078484721.png","1626510845668.png")
+midas_helm = (Pattern("1626510931789.png").similar(0.55),"1626510937305.png")
+mushroom_cap = (Pattern("1626513434980.png").similar(0.51),"1626513443118.png")
 epic_helms = [bucket_helm, great_helm, cozy_hat, midas_helm, mushroom_cap]
-oni_mask = ("1626510737382.png","1626510742869.png")
-void_mask = ("void_mask.png","1626511369748.png")
-kingsguard_helm = ("1626511504387.png","1626511509382.png")
+oni_mask = (Pattern("1626510737382.png").similar(0.55),"1626510742869.png")
+void_mask = (Pattern("void_mask.png").similar(0.56),"1626511369748.png")
+kingsguard_helm = (Pattern("1626511504387.png").similar(0.54),"1626511509382.png")
 legendary_helms = [oni_mask, void_mask, kingsguard_helm]
 # Tap
 tap = "tap.png"
@@ -189,6 +202,7 @@ def check_claim():
 def buy_item(buy_region, amount):
     try:
         wait_click(stats_tab)
+        sleep(2)
         wait_click(amount)
         buy_region.click(buy)
     except:
@@ -248,13 +262,16 @@ def anti_tap():
 
 def sell_gear(click_list):
     wait_click(sell)
+    sleep(1)
     click(highest_tier_location)
+    sleep(1)
     click(epic_gear_location)
+    sleep(1)
     sell_confirm_region.click(sell)
     # click specific armor tab
     wait_click(click_list[2])
 
-def elixir_farm():
+def elixir_farm(level_elixir):
     buy_item(gold_region, fifty_percent)
     buy_item(crit_region, hundred_percent)
     wait_click(battle)
@@ -272,6 +289,12 @@ def elixir_farm():
     sleep(2)
     buy_item(gold_region, hundred_percent)
     wait_click(elixir_tab)
+    if (level_elixir):
+        try:
+            wait_click(elixir_mastery)
+            wait_click(ok)
+        except:
+            pass
     wait_click(rewind)
     wait_click(rewind_confirm)
 
@@ -295,6 +318,10 @@ def rewind_farm():
     full_rewind()
 
 def gear_farm(click_list):
+    wait_click(gear_tab)
+    # Select which armor piece
+    wait_click(click_list[2])
+    sell_gear(click_list)
     wait_click(battle)
     wait_click(hunt)
     # Select enemy
@@ -303,18 +330,20 @@ def gear_farm(click_list):
     wait_click(click_list[1])
     wait_click(ok)
     sleep(10)
-    wait(ok, 3600)
+    for i in range (3600):
+        try:
+            wait(ok, 10)
+            break
+        except:
+            sleep(10)
     wait_click(ok)
-    wait_click(gear_tab)
-    # Select which armor piece
-    wait_click(click_list[2])
-    sell_gear(click_list)
+
 
 # Main function
 while True:
     try: # skip back to battle if we hit an anti-cheat
-        #gear_farm(boot_clicks)
-        elixir_farm()
+        #gear_farm(ring_clicks)
+        elixir_farm(False)
     except Exception as e:
         print(e)
             
